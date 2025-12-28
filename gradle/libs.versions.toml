@@ -3,32 +3,35 @@
 agp = "8.11.1"
 coilCompose = "2.7.0"
 kotlin = "2.2.0"
-ksp = "2.2.0-2.0.2"
 
 # ===== ANDROID CORE =====
-coreKtx = "1.17.0"
-lifecycleRuntimeKtx = "2.6.2"
-activityCompose = "1.8.2"
-appcompat = "1.7.1"
+coreKtx = "1.15.0"
+lifecycleRuntimeKtx = "2.8.7"
+activityCompose = "1.9.3"
+appcompat = "1.7.0"
 
 # ===== JETPACK COMPOSE =====
-composeBom = "2023.10.01"
-
-#composeBom = "2024.02.00"
+composeBom = "2024.12.01"
 
 # ===== DEPENDENCY INJECTION =====
-hilt = "2.57"
+hilt = "2.57.2"
 hiltCompiler = "1.2.0"
-hiltAndroidTesting = "2.57"
+hiltAndroidTesting = "2.57.2"
 
 # ===== NETWORKING =====
 retrofit = "3.0.0"
 converterMoshi = "3.0.0"
-okhttp3 = "5.3.2"
-loggingInterceptor = "5.3.2"
+okhttp3 = "4.12.0"
+loggingInterceptor = "4.12.0"
 
 # ===== JSON SERIALIZATION =====
-moshi = "1.15.2"
+moshi = "1.15.0"
+
+# ===== COROUTINES =====
+coroutines = "1.10.2"
+
+# ===== DATABASE =====
+room = "2.7.1"
 
 # ===== TESTING =====
 junit4 = "4.13.2"
@@ -39,7 +42,7 @@ mockito = "5.21.0"
 mockitoKotlin = "6.1.0"
 coroutinesTest = "1.10.2"
 turbine = "1.2.1"
-mockWebServer = "5.3.2"
+mockWebServer = "4.12.0"
 
 # ===== TESTING - ANDROID INSTRUMENTATION =====
 testRunner = "1.7.0"
@@ -93,6 +96,14 @@ moshi = { group = "com.squareup.moshi", name = "moshi", version.ref = "moshi" }
 moshi-kotlin = { group = "com.squareup.moshi", name = "moshi-kotlin", version.ref = "moshi" }
 moshi-kotlin-codegen = { group = "com.squareup.moshi", name = "moshi-kotlin-codegen", version.ref = "moshi" }
 
+# ===== COROUTINES =====
+coroutines-core = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "coroutines" }
+
+# ===== DATABASE =====
+room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "room" }
+room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "room" }
+room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "room" }
+
 # ===== UNIT TESTING =====
 junit4 = { group = "junit", name = "junit", version.ref = "junit4" }
 junit5-api = { group = "org.junit.jupiter", name = "junit-jupiter-api", version.ref = "junit5" }
@@ -130,8 +141,6 @@ kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 jetbrains-kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 
-# ===== CODE PROCESSING =====
-ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 
 # ===== DEPENDENCY INJECTION =====
 hilt-android = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }

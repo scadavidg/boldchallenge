@@ -2,7 +2,7 @@ plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.ktlint)
-    alias(libs.plugins.ksp)
+    kotlin("kapt")
 }
 
 android {
@@ -14,6 +14,15 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
+
+        // Leer API key desde local.properties (no se sube a Git)
+        // Gradle lee automáticamente desde local.properties si existe
+        val weatherApiKey = project.findProperty("WEATHER_API_KEY") as String? ?: ""
+        buildConfigField("String", "WEATHER_API_KEY", "\"$weatherApiKey\"")
+    }
+
+    buildFeatures {
+        buildConfig = true
     }
 
     buildTypes {
@@ -53,7 +62,7 @@ dependencies {
 
     // ===== DEPENDENCY INJECTION =====
     implementation(libs.hilt.android)
-    ksp(libs.hilt.android.compiler)
+    kapt(libs.hilt.android.compiler)
 
     // ===== NETWORKING =====
     implementation(libs.retrofit)
@@ -63,7 +72,12 @@ dependencies {
     // ===== JSON SERIALIZATION =====
     implementation(libs.moshi)
     implementation(libs.moshi.kotlin)
-    ksp(libs.moshi.kotlin.codegen)
+    // Usando reflection en lugar de codegen para evitar problemas con KAPT
+
+    // ===== DATABASE =====
+    implementation(libs.room.runtime)
+    implementation(libs.room.ktx)
+    kapt(libs.room.compiler)
 
     // ===== UNIT TESTING =====
     // JUnit 5 (Modern Testing Framework)

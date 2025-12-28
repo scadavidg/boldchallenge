@@ -18,6 +18,9 @@ tasks.test {
 }
 
 dependencies {
+    // ===== COROUTINES =====
+    implementation(libs.coroutines.core)
+
     // ===== UNIT TESTING =====
     // JUnit 5 (Modern Testing Framework)
     testImplementation(libs.junit5.api)
