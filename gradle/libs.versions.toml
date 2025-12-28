@@ -1,21 +1,68 @@
 [versions]
-agp = "8.11.2"
-kotlin = "2.0.21"
+# ===== BUILD TOOLS =====
+agp = "8.11.1"
+coilCompose = "2.7.0"
+kotlin = "2.2.0"
+ksp = "2.2.0-2.0.2"
+
+# ===== ANDROID CORE =====
 coreKtx = "1.17.0"
-junit = "4.13.2"
+lifecycleRuntimeKtx = "2.6.2"
+activityCompose = "1.8.2"
+appcompat = "1.7.1"
+
+# ===== JETPACK COMPOSE =====
+composeBom = "2023.10.01"
+
+#composeBom = "2024.02.00"
+
+# ===== DEPENDENCY INJECTION =====
+hilt = "2.57"
+hiltCompiler = "1.2.0"
+hiltAndroidTesting = "2.57"
+
+# ===== NETWORKING =====
+retrofit = "3.0.0"
+converterMoshi = "3.0.0"
+okhttp3 = "5.3.2"
+loggingInterceptor = "5.3.2"
+
+# ===== JSON SERIALIZATION =====
+moshi = "1.15.2"
+
+# ===== TESTING =====
+junit4 = "4.13.2"
+junit5 = "6.0.1"
 junitVersion = "1.3.0"
 espressoCore = "3.7.0"
-lifecycleRuntimeKtx = "2.10.0"
-activityCompose = "1.12.2"
-composeBom = "2024.09.00"
+mockito = "5.21.0"
+mockitoKotlin = "6.1.0"
+coroutinesTest = "1.10.2"
+turbine = "1.2.1"
+mockWebServer = "5.3.2"
+
+# ===== TESTING - ANDROID INSTRUMENTATION =====
+testRunner = "1.7.0"
+testRules = "1.7.0"
+testOrchestrator = "1.6.1"
+junitKtx = "1.3.0"
+uiAutomator = "2.3.0"
+junitPlatformSuite = "6.0.1"
+
+# ===== CODE QUALITY =====
+ktlint = "14.0.1"
+
+# ===== Leakcanary =====
+leakcanary = "2.13"
 
 [libraries]
+# ===== ANDROID CORE =====
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
-junit = { group = "junit", name = "junit", version.ref = "junit" }
-androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
-androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
 androidx-lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycleRuntimeKtx" }
 androidx-activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activityCompose" }
+androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
+
+# ===== JETPACK COMPOSE =====
 androidx-compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "composeBom" }
 androidx-ui = { group = "androidx.compose.ui", name = "ui" }
 androidx-ui-graphics = { group = "androidx.compose.ui", name = "ui-graphics" }
@@ -25,8 +72,70 @@ androidx-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-man
 androidx-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
 androidx-material3 = { group = "androidx.compose.material3", name = "material3" }
 
+# ===== UI COMPONENTS =====
+coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coilCompose" }
+
+# ===== DEPENDENCY INJECTION =====
+hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref = "hilt" }
+hilt-android-compiler = { group = "com.google.dagger", name = "hilt-android-compiler", version.ref = "hilt" }
+hilt-android-testing = { group = "com.google.dagger", name = "hilt-android-testing", version.ref = "hiltAndroidTesting" }
+androidx-hilt-compiler = { group = "androidx.hilt", name = "hilt-compiler", version.ref = "hiltCompiler" }
+androidx-hilt-navigation-compose = { group = "androidx.hilt", name = "hilt-navigation-compose", version.ref = "hiltCompiler" }
+
+# ===== NETWORKING =====
+retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
+converter-moshi = { group = "com.squareup.retrofit2", name = "converter-moshi", version.ref = "converterMoshi" }
+okhttp3 = { group = "com.squareup.okhttp3", name = "okhttp", version.ref = "okhttp3" }
+logging-interceptor = { group = "com.squareup.okhttp3", name = "logging-interceptor", version.ref = "loggingInterceptor" }
+
+# ===== JSON SERIALIZATION =====
+moshi = { group = "com.squareup.moshi", name = "moshi", version.ref = "moshi" }
+moshi-kotlin = { group = "com.squareup.moshi", name = "moshi-kotlin", version.ref = "moshi" }
+moshi-kotlin-codegen = { group = "com.squareup.moshi", name = "moshi-kotlin-codegen", version.ref = "moshi" }
+
+# ===== UNIT TESTING =====
+junit4 = { group = "junit", name = "junit", version.ref = "junit4" }
+junit5-api = { group = "org.junit.jupiter", name = "junit-jupiter-api", version.ref = "junit5" }
+junit5-engine = { group = "org.junit.jupiter", name = "junit-jupiter-engine", version.ref = "junit5" }
+junit5-params = { group = "org.junit.jupiter", name = "junit-jupiter-params", version.ref = "junit5" }
+junit5-vintage = { group = "org.junit.vintage", name = "junit-vintage-engine", version.ref = "junit5" }
+mockito-core = { group = "org.mockito", name = "mockito-core", version.ref = "mockito" }
+mockito-kotlin = { group = "org.mockito.kotlin", name = "mockito-kotlin", version.ref = "mockitoKotlin" }
+coroutines-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "coroutinesTest" }
+turbine = { group = "app.cash.turbine", name = "turbine", version.ref = "turbine" }
+mockwebserver = { group = "com.squareup.okhttp3", name = "mockwebserver", version.ref = "mockWebServer" }
+
+# ===== ANDROID INSTRUMENTATION TESTING =====
+androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
+androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
+androidx-test-runner = { group = "androidx.test", name = "runner", version.ref = "testRunner" }
+androidx-test-rules = { group = "androidx.test", name = "rules", version.ref = "testRules" }
+androidx-test-orchestrator = { group = "androidx.test", name = "orchestrator", version.ref = "testOrchestrator" }
+androidx-junit-ktx = { group = "androidx.test.ext", name = "junit-ktx", version.ref = "junitKtx" }
+androidx-uiautomator = { group = "androidx.test.uiautomator", name = "uiautomator", version.ref = "uiAutomator" }
+junit-platform-suite-api = { group = "org.junit.platform", name = "junit-platform-suite-api", version.ref = "junitPlatformSuite" }
+junit-platform-suite-engine = { group = "org.junit.platform", name = "junit-platform-suite-engine", version.ref = "junitPlatformSuite" }
+
+# ===== Leakcanary =====
+leakcanary = { group = "com.squareup.leakcanary", name = "leakcanary-android", version.ref = "leakcanary" }
+
+
 [plugins]
+# ===== ANDROID PLUGINS =====
 android-application = { id = "com.android.application", version.ref = "agp" }
+android-library = { id = "com.android.library", version.ref = "agp" }
+
+# ===== KOTLIN PLUGINS =====
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+jetbrains-kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
+
+# ===== CODE PROCESSING =====
+ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
+
+# ===== DEPENDENCY INJECTION =====
+hilt-android = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
+
+# ===== CODE QUALITY =====
+ktlint = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktlint" }
 
