@@ -15,8 +15,8 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
 
-        // Leer API key desde local.properties (no se sube a Git)
-        // Gradle lee automáticamente desde local.properties si existe
+        // Read API key from local.properties (not committed to Git)
+        // Gradle automatically reads from local.properties if it exists
         val weatherApiKey = project.findProperty("WEATHER_API_KEY") as String? ?: ""
         buildConfigField("String", "WEATHER_API_KEY", "\"$weatherApiKey\"")
     }
@@ -72,7 +72,6 @@ dependencies {
     // ===== JSON SERIALIZATION =====
     implementation(libs.moshi)
     implementation(libs.moshi.kotlin)
-    // Usando reflection en lugar de codegen para evitar problemas con KAPT
 
     // ===== DATABASE =====
     implementation(libs.room.runtime)

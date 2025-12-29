@@ -8,6 +8,7 @@ import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface LocationDao {
+    // LIKE pattern enables incremental search: "lo" matches "london", "los angeles", etc.
     @Query("SELECT * FROM locations WHERE query LIKE :query || '%'")
     fun searchByQuery(query: String): Flow<List<LocationEntity>>
 

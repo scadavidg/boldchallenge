@@ -1,13 +1,14 @@
 package com.data.repository
 
 import com.data.api.WeatherApi
-import com.data.db.LocationDao
+import com.data.db.ForecastDao
 import com.data.error.toAppError
 import com.data.mapper.toDomain
 import com.data.mapper.toEntity
-import com.domain.model.Location
-import com.domain.repository.LocationRepository
+import com.domain.model.Forecast
+import com.domain.repository.ForecastRepository
 import com.domain.result.ResultState
+import com.squareup.moshi.Moshi
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -22,56 +23,56 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 import javax.inject.Named
 
-class LocationRepositoryImpl @Inject constructor(
+class ForecastRepositoryImpl @Inject constructor(
     private val weatherApi: WeatherApi,
-    private val locationDao: LocationDao,
+    private val forecastDao: ForecastDao,
+    private val moshi: Moshi,
     @Named("WeatherApiKey") private val apiKey: String
-) : LocationRepository {
+) : ForecastRepository {
 
     // Using SupervisorJob to prevent one failing network request from cancelling others
     private val backgroundScope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
 
-    override fun searchLocations(query: String): Flow<ResultState<List<Location>>> {
+    override fun getForecast(locationName: String, days: Int): Flow<ResultState<Forecast>> {
         return flow {
             // Get initial cache state (non-blocking)
-            val cachedData = try {
-                locationDao.searchByQuery(query)
-                    .map { entities -> entities.map { it.toDomain() } }
-                    .catch { emit(emptyList()) }
-                    .firstOrNull() ?: emptyList()
+            val cachedForecast = try {
+                forecastDao.getForecast(locationName)
+                    .map { entity -> entity?.toDomain(moshi) }
+                    .catch { emit(null) }
+                    .firstOrNull()
             } catch (e: Exception) {
-                emptyList()
+                null
             }
 
             // Emit Loading with cached data if available
-            if (cachedData.isNotEmpty()) {
-                emit(ResultState.Loading(data = cachedData))
+            if (cachedForecast != null) {
+                emit(ResultState.Loading(data = cachedForecast))
             } else {
                 emit(ResultState.Loading())
             }
 
             // Channel to receive network result
-            val networkResultChannel = Channel<ResultState<List<Location>>>(Channel.UNLIMITED)
+            val networkResultChannel = Channel<ResultState<Forecast>>(Channel.UNLIMITED)
 
             // Trigger background refresh
             backgroundScope.launch {
                 try {
-                    val dtos = weatherApi.searchLocations(apiKey, query)
-                    val entities = dtos.map { it.toEntity(query) }
-                    val locations = entities.map { it.toDomain() }
+                    val response = weatherApi.getForecast(apiKey, locationName, days)
+                    val entity = response.toEntity(moshi, locationName)
+                    val forecast = response.toDomain()
 
                     // Update cache - Room will automatically emit updated data
-                    locationDao.clearByQuery(query)
-                    locationDao.insertAll(entities)
+                    forecastDao.upsertForecast(entity)
 
                     // Emit success with fresh data
-                    networkResultChannel.send(ResultState.Success(locations))
+                    networkResultChannel.send(ResultState.Success(forecast))
                 } catch (e: Exception) {
                     val error = e.toAppError()
                     // If we have cached data, emit success with cache (silent fallback)
                     // Otherwise, emit failure
-                    if (cachedData.isNotEmpty()) {
-                        networkResultChannel.send(ResultState.Success(cachedData))
+                    if (cachedForecast != null) {
+                        networkResultChannel.send(ResultState.Success(cachedForecast))
                     } else {
                         networkResultChannel.send(ResultState.Failure(error))
                     }

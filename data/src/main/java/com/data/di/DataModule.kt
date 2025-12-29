@@ -2,9 +2,12 @@ package com.data.di
 
 import android.content.Context
 import androidx.room.Room
+import com.data.db.ForecastDao
 import com.data.db.LocationDao
 import com.data.db.LocationDatabase
+import com.data.repository.ForecastRepositoryImpl
 import com.data.repository.LocationRepositoryImpl
+import com.domain.repository.ForecastRepository
 import com.domain.repository.LocationRepository
 import dagger.Binds
 import dagger.Module
@@ -23,6 +26,11 @@ abstract class DataModule {
         locationRepositoryImpl: LocationRepositoryImpl
     ): LocationRepository
 
+    @Binds
+    abstract fun bindForecastRepository(
+        forecastRepositoryImpl: ForecastRepositoryImpl
+    ): ForecastRepository
+
     companion object {
         @Provides
         @Singleton
@@ -34,13 +42,19 @@ abstract class DataModule {
                 LocationDatabase::class.java,
                 "location_database"
             )
-                .fallbackToDestructiveMigration() // TODO: Agregar migración adecuada en producción
+                // Destructive migration acceptable for cache-only data
+                .fallbackToDestructiveMigration()
                 .build()
         }
 
         @Provides
         fun provideLocationDao(database: LocationDatabase): LocationDao {
             return database.locationDao()
+        }
+
+        @Provides
+        fun provideForecastDao(database: LocationDatabase): ForecastDao {
+            return database.forecastDao()
         }
     }
 }

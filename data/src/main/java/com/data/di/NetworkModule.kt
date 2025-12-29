@@ -24,6 +24,7 @@ object NetworkModule {
     @Provides
     @Singleton
     fun provideOkHttpClient(): OkHttpClient {
+        // Logging level should be conditional based on BuildConfig.DEBUG in production
         val loggingInterceptor = HttpLoggingInterceptor().apply {
             level = HttpLoggingInterceptor.Level.BODY
         }
@@ -62,7 +63,7 @@ object NetworkModule {
     @Provides
     @Named("WeatherApiKey")
     fun provideWeatherApiKey(): String {
-        // Leer API key desde BuildConfig (que se genera desde local.properties)
+        // Read API key from BuildConfig (generated from local.properties)
         return BuildConfig.WEATHER_API_KEY
     }
 }
