@@ -71,6 +71,8 @@ dependencies {
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
+    implementation("androidx.lifecycle:lifecycle-viewmodel-compose")
+    implementation("androidx.lifecycle:lifecycle-runtime-compose")
 
     // ===== JETPACK COMPOSE =====
     implementation(platform(libs.androidx.compose.bom))
@@ -78,6 +80,8 @@ dependencies {
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
+    implementation("androidx.navigation:navigation-compose")
+    implementation(libs.coil.compose)
 
     // ===== DEPENDENCY INJECTION =====
     implementation(libs.hilt.android)
