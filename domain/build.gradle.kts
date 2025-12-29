@@ -1,3 +1,4 @@
+
 plugins {
     id("java-library")
     kotlin("jvm")
@@ -32,7 +33,6 @@ dependencies {
     testRuntimeOnly(libs.junit5.vintage)
 
     // Testing Utilities
-    testImplementation(libs.mockito.core)
-    testImplementation(libs.mockito.kotlin)
+    testImplementation(libs.mockk)
     testImplementation(libs.coroutines.test)
 }

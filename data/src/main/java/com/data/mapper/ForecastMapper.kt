@@ -45,8 +45,13 @@ fun ForecastResponseDto.toEntity(moshi: Moshi, locationName: String): ForecastEn
 
 fun ForecastEntity.toDomain(moshi: Moshi): Forecast {
     val adapter: JsonAdapter<ForecastResponseDto> = moshi.adapter(ForecastResponseDto::class.java)
-    val dto = adapter.fromJson(serializedForecast)
-        ?: throw IllegalStateException("Failed to deserialize forecast from cache")
+    val dto = try {
+        adapter.fromJson(serializedForecast)
+    } catch (e: Exception) {
+        // Catch all Moshi exceptions (JsonEncodingException, EOFException, JsonDataException, etc.)
+        // and convert to IllegalStateException to hide implementation details
+        throw IllegalStateException("Failed to deserialize forecast from cache", e)
+    } ?: throw IllegalStateException("Failed to deserialize forecast from cache")
     return dto.toDomain()
 }
 

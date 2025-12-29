@@ -96,8 +96,7 @@ dependencies {
     testRuntimeOnly(libs.junit5.vintage)
 
     // Testing Utilities
-    testImplementation(libs.mockito.core)
-    testImplementation(libs.mockito.kotlin)
+    testImplementation(libs.mockk)
     testImplementation(libs.coroutines.test)
     testImplementation(libs.turbine) // Flow testing
 
@@ -111,9 +110,8 @@ dependencies {
     androidTestImplementation(libs.hilt.android.testing)
     kaptAndroidTest(libs.hilt.android.compiler)
 
-    // Mockito for Android tests
-    androidTestImplementation(libs.mockito.core)
-    androidTestImplementation(libs.mockito.kotlin)
+    // MockK for Android tests
+    androidTestImplementation(libs.mockk)
     androidTestImplementation(libs.coroutines.test)
 
     // ===== DEBUG TOOLS =====

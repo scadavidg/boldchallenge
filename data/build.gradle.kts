@@ -83,15 +83,19 @@ dependencies {
     testImplementation(libs.junit5.api)
     testImplementation(libs.junit5.params)
     testRuntimeOnly(libs.junit5.engine)
+    
+    // JUnit Platform Launcher (required for Android library modules with JUnit 5)
+    // Version should match junit-jupiter version (6.0.1 -> platform 1.10.x)
+    testImplementation(libs.junit.platform.launcher)
 
     // JUnit 4 (Legacy Compatibility)
     testImplementation(libs.junit4)
     testRuntimeOnly(libs.junit5.vintage)
 
     // Testing Utilities
-    testImplementation(libs.mockito.core)
-    testImplementation(libs.mockito.kotlin)
     testImplementation(libs.coroutines.test)
+    testImplementation(libs.mockk)
+    testImplementation(libs.turbine)
 
     // Network Testing
     testImplementation(libs.mockwebserver)
