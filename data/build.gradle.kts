@@ -2,7 +2,7 @@ plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.ktlint)
-    alias(libs.plugins.ksp)
+    kotlin("kapt")
 }
 
 android {
@@ -14,6 +14,15 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
+
+        // Read API key from local.properties (not committed to Git)
+        // Gradle automatically reads from local.properties if it exists
+        val weatherApiKey = project.findProperty("WEATHER_API_KEY") as String? ?: ""
+        buildConfigField("String", "WEATHER_API_KEY", "\"$weatherApiKey\"")
+    }
+
+    buildFeatures {
+        buildConfig = true
     }
 
     buildTypes {
@@ -53,7 +62,7 @@ dependencies {
 
     // ===== DEPENDENCY INJECTION =====
     implementation(libs.hilt.android)
-    ksp(libs.hilt.android.compiler)
+    kapt(libs.hilt.android.compiler)
 
     // ===== NETWORKING =====
     implementation(libs.retrofit)
@@ -63,22 +72,30 @@ dependencies {
     // ===== JSON SERIALIZATION =====
     implementation(libs.moshi)
     implementation(libs.moshi.kotlin)
-    ksp(libs.moshi.kotlin.codegen)
+
+    // ===== DATABASE =====
+    implementation(libs.room.runtime)
+    implementation(libs.room.ktx)
+    kapt(libs.room.compiler)
 
     // ===== UNIT TESTING =====
     // JUnit 5 (Modern Testing Framework)
     testImplementation(libs.junit5.api)
     testImplementation(libs.junit5.params)
     testRuntimeOnly(libs.junit5.engine)
+    
+    // JUnit Platform Launcher (required for Android library modules with JUnit 5)
+    // Version should match junit-jupiter version (6.0.1 -> platform 1.10.x)
+    testImplementation(libs.junit.platform.launcher)
 
     // JUnit 4 (Legacy Compatibility)
     testImplementation(libs.junit4)
     testRuntimeOnly(libs.junit5.vintage)
 
     // Testing Utilities
-    testImplementation(libs.mockito.core)
-    testImplementation(libs.mockito.kotlin)
     testImplementation(libs.coroutines.test)
+    testImplementation(libs.mockk)
+    testImplementation(libs.turbine)
 
     // Network Testing
     testImplementation(libs.mockwebserver)

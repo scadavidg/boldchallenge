@@ -1,9 +1,9 @@
 plugins {
     kotlin("android")
     alias(libs.plugins.android.application)
-    alias(libs.plugins.kotlin.compose)
-    alias(libs.plugins.ksp)
+    kotlin("kapt")
     alias(libs.plugins.hilt.android)
+    alias(libs.plugins.kotlin.compose)
 }
 
 android {
@@ -34,7 +34,7 @@ android {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
     }
-    
+
     buildFeatures {
         compose = true
     }
@@ -82,8 +82,8 @@ dependencies {
     // ===== DEPENDENCY INJECTION =====
     implementation(libs.hilt.android)
     implementation(libs.androidx.hilt.navigation.compose)
-    ksp(libs.hilt.android.compiler)
-    ksp(libs.androidx.hilt.compiler)
+    kapt(libs.hilt.android.compiler)
+    kapt(libs.androidx.hilt.compiler)
 
     // ===== UNIT TESTING =====
     // JUnit 5 (Modern Testing Framework)
@@ -96,8 +96,7 @@ dependencies {
     testRuntimeOnly(libs.junit5.vintage)
 
     // Testing Utilities
-    testImplementation(libs.mockito.core)
-    testImplementation(libs.mockito.kotlin)
+    testImplementation(libs.mockk)
     testImplementation(libs.coroutines.test)
     testImplementation(libs.turbine) // Flow testing
 
@@ -109,11 +108,10 @@ dependencies {
 
     // Hilt Testing
     androidTestImplementation(libs.hilt.android.testing)
-    kspAndroidTest(libs.hilt.android.compiler)
+    kaptAndroidTest(libs.hilt.android.compiler)
 
-    // Mockito for Android tests
-    androidTestImplementation(libs.mockito.core)
-    androidTestImplementation(libs.mockito.kotlin)
+    // MockK for Android tests
+    androidTestImplementation(libs.mockk)
     androidTestImplementation(libs.coroutines.test)
 
     // ===== DEBUG TOOLS =====
