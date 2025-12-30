@@ -6,7 +6,7 @@ import com.squareup.moshi.JsonClass
 @JsonClass(generateAdapter = true)
 data class LocationDto(
     @Json(name = "id")
-    val id: Long,
+    val id: Long? = null, // Only returned by search endpoint, not forecast
     @Json(name = "name")
     val name: String,
     @Json(name = "region")
@@ -18,5 +18,5 @@ data class LocationDto(
     @Json(name = "lon")
     val lon: Double?,
     @Json(name = "url")
-    val url: String?
+    val url: String? = null // Only returned by search endpoint
 )

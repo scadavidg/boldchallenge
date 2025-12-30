@@ -1,9 +1,20 @@
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.ktlint)
     kotlin("kapt")
 }
+
+// Read API key from local.properties
+val localProperties = Properties().apply {
+    val localPropertiesFile = rootProject.file("local.properties")
+    if (localPropertiesFile.exists()) {
+        load(localPropertiesFile.inputStream())
+    }
+}
+val weatherApiKey: String = localProperties.getProperty("WEATHER_API_KEY") ?: ""
 
 android {
     namespace = "com.data"
@@ -15,9 +26,7 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
 
-        // Read API key from local.properties (not committed to Git)
-        // Gradle automatically reads from local.properties if it exists
-        val weatherApiKey = project.findProperty("WEATHER_API_KEY") as String? ?: ""
+        // Set API key from local.properties (not committed to Git)
         buildConfigField("String", "WEATHER_API_KEY", "\"$weatherApiKey\"")
     }
 

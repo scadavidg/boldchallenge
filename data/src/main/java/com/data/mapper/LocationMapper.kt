@@ -30,7 +30,7 @@ fun LocationEntity.toDomain(): Location {
 
 fun LocationDto.toEntity(query: String): LocationEntity {
     return LocationEntity(
-        id = id,
+        id = id ?: throw IllegalStateException("Location id is required for caching"),
         name = name,
         region = region,
         country = country,
