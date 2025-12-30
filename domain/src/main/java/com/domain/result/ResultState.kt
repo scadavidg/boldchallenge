@@ -77,3 +77,4 @@ fun <T> ResultState<T>.mapError(transform: (AppError) -> AppError): ResultState<
     is ResultState.Failure -> ResultState.Failure(transform(error))
 }
 
+

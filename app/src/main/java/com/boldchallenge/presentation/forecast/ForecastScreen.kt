@@ -52,6 +52,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.platform.LocalInspectionMode
 import android.content.res.Configuration
 import androidx.compose.ui.draw.clip
@@ -371,6 +373,7 @@ private fun ForecastHeader(
                             Color.White.copy(alpha = 0.2f),
                             shape = CircleShape
                         )
+                        .semantics { contentDescription = "Refresh" }
                 ) {
                     if (isRefreshing) {
                         CircularProgressIndicator(
@@ -443,6 +446,7 @@ private fun ForecastHeaderWithToday(
                         Color.White.copy(alpha = 0.2f),
                         shape = CircleShape
                     )
+                    .semantics { contentDescription = "Refresh" }
             ) {
                 if (isRefreshing) {
                     CircularProgressIndicator(

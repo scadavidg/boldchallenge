@@ -52,6 +52,7 @@ android {
     packaging {
         resources {
             excludes += "META-INF/versions/**"
+            excludes += "META-INF/LICENSE*"
         }
     }
 }
@@ -117,6 +118,9 @@ dependencies {
     // MockK for Android tests
     androidTestImplementation(libs.mockk)
     androidTestImplementation(libs.coroutines.test)
+
+    // Navigation Testing
+    androidTestImplementation("androidx.navigation:navigation-testing:2.8.0")
 
     // ===== DEBUG TOOLS =====
     debugImplementation(libs.androidx.ui.tooling)

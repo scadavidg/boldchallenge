@@ -2,7 +2,7 @@
 # ===== BUILD TOOLS =====
 agp = "8.11.1"
 coilCompose = "2.7.0"
-junitPlatformLauncher = "6.0.1"
+junitPlatformLauncher = "1.11.0"
 kotlin = "2.2.0"
 
 # ===== ANDROID CORE =====
@@ -36,7 +36,7 @@ room = "2.7.1"
 
 # ===== TESTING =====
 junit4 = "4.13.2"
-junit5 = "6.0.1"
+junit5 = "5.11.0"
 junitVersion = "1.3.0"
 espressoCore = "3.7.0"
 mockk = "1.13.10"
@@ -50,7 +50,7 @@ testRules = "1.7.0"
 testOrchestrator = "1.6.1"
 junitKtx = "1.3.0"
 uiAutomator = "2.3.0"
-junitPlatformSuite = "6.0.1"
+junitPlatformSuite = "1.11.0"
 
 # ===== CODE QUALITY =====
 ktlint = "14.0.1"

@@ -136,9 +136,11 @@ class SearchViewModel @Inject constructor(
                             )
                         }
                         is ResultState.Failure -> {
+                            // Keep cached data visible on error
                             _uiState.value = _uiState.value.copy(
                                 isLoading = false,
                                 error = result.error
+                                // locations are preserved (not cleared)
                             )
                         }
                     }
